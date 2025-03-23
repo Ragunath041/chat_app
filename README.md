@@ -14,7 +14,7 @@ A real-time chat application that allows users to communicate instantly with eac
 
 1. Clone the repository
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/Ragunath041/chat_app.git
 cd realtime_chat
 ```
 
