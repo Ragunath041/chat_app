@@ -1,0 +1,290 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 33% 98%;
+    --foreground: 224 71% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+
+    --primary: 235 83% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 96%;
+    --secondary-foreground: 224 71% 4%;
+
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 8% 46%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 235 83% 60%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 210 40% 98%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 221.2 83% 53.3%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 217 91% 60%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 221.2 83% 53.3%;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 220 13% 91%;
+
+    --card: 224 71% 6%;
+    --card-foreground: 220 13% 91%;
+
+    --popover: 224 71% 6%;
+    --popover-foreground: 220 13% 91%;
+
+    --primary: 235 83% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 16% 15%;
+    --secondary-foreground: 220 13% 91%;
+
+    --muted: 222 16% 15%;
+    --muted-foreground: 222 13% 65%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 16% 24%;
+    --input: 222 16% 24%;
+    --ring: 235 83% 65%;
+    
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 217.2 91.2% 59.8%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: radial-gradient(
+      circle at top right,
+      hsl(var(--primary) / 0.05),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      hsl(var(--accent) / 0.05),
+      transparent 40%
+    );
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 dark:bg-black/70 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg;
+  }
+  
+  .message-bubble {
+    @apply py-2.5 px-4 rounded-2xl max-w-md break-words shadow-sm;
+  }
+  
+  .message-bubble-sent {
+    @apply bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-br-sm;
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  .message-bubble-received {
+    @apply bg-muted border border-border/40 rounded-bl-sm;
+    animation: slideInLeft 0.3s ease-out;
+  }
+  
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 15s ease infinite;
+  }
+  
+  @keyframes gradient-x {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .page-transition-enter {
+    @apply animate-fade-in;
+  }
+  
+  .page-transition-exit {
+    @apply animate-fade-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Avatar glow effect */
+  .avatar-glow::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(45deg, rgba(var(--primary), 0.5), rgba(var(--accent), 0.5));
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .avatar-glow:hover::before {
+    opacity: 0.7;
+  }
+  
+  /* Custom animation for user selection */
+  .user-item {
+    transition: all 0.2s ease;
+  }
+  
+  .user-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .user-item:active {
+    transform: translateY(0px);
+  }
+  
+  /* Floating element style */
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+  
+  @keyframes floating {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  /* Chat area background pattern */
+  .chat-pattern {
+    background-color: hsl(var(--background));
+    background-image: 
+      radial-gradient(hsl(var(--primary) / 0.05) 2px, transparent 2px),
+      radial-gradient(hsl(var(--accent) / 0.05) 2px, transparent 2px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+  }
+  
+  /* Profile menu button glow */
+  .profile-btn-glow {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .profile-btn-glow::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      transparent, 
+      hsl(var(--primary) / 0.2), 
+      transparent 30%
+    );
+    z-index: -1;
+    animation: rotate 4s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/50;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
